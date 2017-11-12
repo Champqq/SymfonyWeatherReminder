@@ -3,15 +3,17 @@
     "type": "project",
     "license": "proprietary",
     "description": "Project description",
+    "minimum-stability": "beta",
     "require": {
-        "php": "^7.0.8",
-        "symfony/console": "^3.3",
+        "php": "^7.1.3",
+        "symfony/console": "^4.0",
         "symfony/flex": "^1.0",
-        "symfony/framework-bundle": "^3.3",
-        "symfony/yaml": "^3.3"
+        "symfony/framework-bundle": "^4.0",
+        "symfony/lts": "^4@dev",
+        "symfony/yaml": "^4.0"
     },
     "require-dev": {
-        "symfony/dotenv": "^3.3"
+        "symfony/dotenv": "^4.0"
     },
     "config": {
         "preferred-install": {
@@ -40,9 +42,7 @@
         ]
     },
     "conflict": {
-        "symfony/symfony": "*",
-        "symfony/twig-bundle": "<3.3",
-        "symfony/debug": "<3.3"
+        "symfony/symfony": "*"
     },
     "extra": {
         "symfony": {
