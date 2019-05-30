@@ -4,7 +4,7 @@
     "license": "MIT",
     "description": "A minimal Symfony project recommended to create bare bones applications",
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.2.9",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "symfony/console": "*",
@@ -33,6 +33,7 @@
         "paragonie/random_compat": "2.*",
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*",
         "symfony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*",
         "symfony/polyfill-php56": "*"
