@@ -3,8 +3,10 @@
     "type": "project",
     "license": "MIT",
     "description": "A minimal Symfony project recommended to create bare bones applications",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "php": ">=7.0.8",
+        "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "symfony/flex": "^1.3.1"
@@ -35,11 +37,9 @@
         }
     },
     "replace": {
-        "paragonie/random_compat": "2.*",
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php70": "*",
-        "symfony/polyfill-php56": "*"
+        "symfony/polyfill-php72": "*"
     },
     "scripts": {
         "auto-scripts": [
@@ -57,7 +57,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "3.4.*"
+            "require": "5.2.*"
         }
     }
 }
