@@ -15,6 +15,7 @@
         "symfony/console": "*",
         "symfony/dotenv": "*",
         "symfony/framework-bundle": "*",
+        "symfony/runtime": "*",
         "symfony/yaml": "*"
     },
     "require-dev": {
