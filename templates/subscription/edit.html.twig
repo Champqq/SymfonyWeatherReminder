@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Редагувати підписку{% endblock %}
+
+{% block body %}
+    <h1>Редагувати підписку</h1>
+
+    <form method="post" action="{{ path('edit_subscription_web', { id: subscription.id }) }}">
+
+    <label>Місто:</label>
+        <input type="text" name="city" value="{{ subscription.city }}" required><br>
+
+        <label>Час:</label>
+        <input type="time" name="time" value="{{ subscription.time|date('H:i') }}" required><br>
+        <label>
+            <input type="checkbox" name="receive_emergencies" {% if subscription and subscription.receiveEmergencies %}checked{% endif %}>
+            Отримувати екстрені повідомлення
+        </label><br>
+        <label>
+            <input type="checkbox" name="receive_sms" {% if subscription and subscription.receiveSms %}checked{% endif %}>
+            Отримувати SMS
+        </label><br><br>
+        <label>
+            <input type="checkbox" name="receive_email" {% if subscription is defined and subscription.receiveEmail %}checked{% endif %}>
+            Отримувати email
+        </label><br>
+
+        <label>
+            <input type="checkbox" name="enabled" {% if subscription.enabled %}checked{% endif %}>
+            Активна
+        </label><br><br>
+
+        <button type="submit">Зберегти</button>
+    </form>
+
+    <p><a href="{{ path('app_profile') }}">⬅ Назад до профілю</a></p>
+{% endblock %}

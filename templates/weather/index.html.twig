@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Прогноз погоди{% endblock %}
+
+{% block body %}
+    <h1>Прогноз погоди для {{ city }}</h1>
+
+    {% if forecast %}
+        <ul>
+            {% for day in forecast %}
+                <div style="margin-bottom: 15px;">
+                    <strong>{{ day.dt_txt|date('l, d M Y') }}</strong><br>
+                    🌤 {{ day.weather[0].description|capitalize }}<br>
+                    🌡 Температура: {{ day.main.temp }}°C
+                </div>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Немає даних про погоду.</p>
+    {% endif %}
+{% endblock %}

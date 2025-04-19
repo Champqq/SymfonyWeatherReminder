@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Профіль{% endblock %}
+
+{% block body %}
+    <h1>Профіль користувача</h1>
+
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Ролі:</strong> {{ user.roles|join(', ') }}</p>
+
+    <h2>Додаткова інформація</h2>
+    <form method="post">
+        <label for="default_city">Місто за замовчуванням:</label>
+        <input type="text" id="default_city" name="default_city" value="{{ user.defaultCity ?? 'Kyiv' }}"><br><br>
+
+        <label for="phone_number">Номер телефону:</label>
+        <input type="text" id="phone_number" name="phone_number" value="{{ user.phoneNumber ?? '' }}"><br><br>
+
+        <button type="submit">Зберегти</button>
+    </form>
+
+    <h2>Ваші підписки</h2>
+
+    <ul>
+        {% for sub in subscriptions %}
+            <li>
+                <strong>{{ sub.city }}</strong> о {{ sub.time|date('H:i') }} —
+                {% if sub.enabled %}Активна{% else %}Вимкнена{% endif %}
+                <br>
+                <a href="{{ path('edit_subscription_web', {'id': sub.id}) }}">✏️ Редагувати</a>
+                <form method="post" action="{{ path('subscription_delete', {'id': sub.id}) }}" style="display:inline">
+                    <button type="submit" onclick="return confirm('Видалити підписку?')">🗑️ Видалити</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+
+    <a href="{{ path('subscription_new') }}">⬅ Створити підписку</a>
+    <a href="{{ path('home') }}">⬅ Назад на головну</a>
+{% endblock %}

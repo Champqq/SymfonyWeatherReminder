@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Нова підписка{% endblock %}
+
+{% block body %}
+    <h1>Створити нову підписку</h1>
+
+    <form method="post">
+        <label for="city">Місто:</label>
+        <input type="text" id="city" name="city" required><br>
+
+        <label for="time">Час:</label>
+        <input type="time" id="time" name="time" required><br>
+        <label>
+            <input type="checkbox" name="receive_emergencies" checked>
+            Отримувати екстрені повідомлення
+
+            <input type="checkbox" name="receive_sms">
+            Отримувати SMS
+
+            <input type="checkbox" name="receive_email">
+            Отримувати email
+        </label><br>
+
+        <label>
+            <input type="checkbox" name="enabled" checked>
+            Активна
+        </label><br><br>
+
+        <button type="submit">Зберегти</button>
+    </form>
+
+    <p><a href="{{ path('app_profile') }}">⬅ Назад до профілю</a></p>
+{% endblock %}

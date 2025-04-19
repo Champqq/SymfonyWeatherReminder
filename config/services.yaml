@@ -4,6 +4,12 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    openweather_api_key: '%env(OPENWEATHER_API_KEY)%'
+    # config/services.yaml
+    vonage_key: '%env(VONAGE_KEY)%'
+    vonage_secret: '%env(VONAGE_SECRET)%'
+    vonage_from: '%env(VONAGE_FROM)%'
+    openai_api_key: '%env(OPENAI_API_KEY)%'
 
 services:
     # default configuration for services in *this* file
@@ -20,5 +26,36 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\Controller\Auth\LoginController:
+        autowire: true
+        autoconfigure: true
+        tags: ['controller.service_arguments']
+
+    App\Controller\Auth\RegisterController:
+        autowire: true
+        autoconfigure: true
+        tags: [ 'controller.service_arguments' ]
+
+    App\Service\Weather\WeatherService:
+        arguments:
+            $apiKey: '%openweather_api_key%'
+
+    App\Service\Message\Sender\SmsSender:
+        arguments:
+            $vonageKey: '%env(VONAGE_KEY)%'
+            $vonageSecret: '%env(VONAGE_SECRET)%'
+            $vonageFrom: '%env(VONAGE_FROM)%'
+
+    App\Service\Message\Builder\RecommendationService:
+        arguments:
+            $apiKey: '%env(OPENAI_API_KEY)%'
+
+    App\DataFixtures\:
+        resource: '../src/DataFixtures/'
+        tags: [ 'doctrine.fixture.orm' ]
+
+

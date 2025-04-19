@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Вхід{% endblock %}
+
+{% block body %}
+    <h1>Вхід</h1>
+
+    {% if error %}
+        <div style="color: red">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form method="post">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="_username" value="{{ last_username }}" required>
+        <br>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="_password" required>
+        <br>
+        <button type="submit">Увійти</button>
+    </form>
+    <p>
+        Ще не маєш акаунту?
+        <a href="{{ path('app_register') }}">Зареєструватись</a>
+    </p>
+
+{% endblock %}
