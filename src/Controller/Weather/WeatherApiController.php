@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Weather;
 
 use App\Service\Weather\WeatherService;
@@ -16,8 +18,7 @@ class WeatherApiController extends AbstractController
 {
     public function __construct(
         private WeatherService $weatherService,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws TransportExceptionInterface
@@ -33,10 +34,10 @@ class WeatherApiController extends AbstractController
 
         return new JsonResponse(
             [
-            'city' => $weather['name'],
-            'temperature' => $weather['main']['temp'],
-            'description' => $weather['weather'][0]['description'],
-            'wind_speed' => $weather['wind']['speed'],
+                'city' => $weather['name'],
+                'temperature' => $weather['main']['temp'],
+                'description' => $weather['weather'][0]['description'],
+                'wind_speed' => $weather['wind']['speed'],
             ]
         );
     }

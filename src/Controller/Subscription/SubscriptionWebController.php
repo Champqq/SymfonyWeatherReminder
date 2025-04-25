@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Subscription;
 
 use App\DTO\SubscriptionRequest;
 use App\Entity\Subscription;
+use App\Service\Entity\EntityService;
 use App\Service\Request\RequestHandler;
 use App\Service\Subscription\SubscriptionService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +20,9 @@ class SubscriptionWebController extends AbstractController implements Subscripti
 {
     public function __construct(
         private SubscriptionService $subscriptionService,
-        private EntityManagerInterface $em,
+        private EntityService $es,
         private RequestHandler $requestHandler,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws \Exception
@@ -37,8 +38,7 @@ class SubscriptionWebController extends AbstractController implements Subscripti
 
             $this->subscriptionService->createOrUpdate($subscription, $dto);
 
-            $this->em->persist($subscription);
-            $this->em->flush();
+            $this->es->save($subscription);
 
             return $this->redirectToRoute('app_profile');
         }
@@ -59,15 +59,13 @@ class SubscriptionWebController extends AbstractController implements Subscripti
 
             $this->subscriptionService->createOrUpdate($subscription, $dto);
 
-            $this->em->persist($subscription);
-            $this->em->flush();
-
+            $this->es->save($subscription);
             return $this->redirectToRoute('app_profile');
         }
 
         return $this->render(
             'subscription/edit.html.twig', [
-            'subscription' => $subscription,
+                'subscription' => $subscription,
             ]
         );
     }
@@ -77,9 +75,7 @@ class SubscriptionWebController extends AbstractController implements Subscripti
     {
         $subscription = $this->subscriptionService->getSubscription($id);
 
-        $this->em->remove($subscription);
-        $this->em->flush();
-
+        $this->es->delete($subscription);
         return $this->redirectToRoute('app_profile');
     }
 }

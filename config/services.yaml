@@ -10,6 +10,9 @@ parameters:
     vonage_secret: '%env(VONAGE_SECRET)%'
     vonage_from: '%env(VONAGE_FROM)%'
     openai_api_key: '%env(OPENAI_API_KEY)%'
+    mailer.sender: '%env(MAILER_SENDER)%'
+    openweather.current_url: '%env(OPENWEATHER_CURRENT_URL)%'
+    openweather.forecast_url: '%env(OPENWEATHER_FORECAST_URL)%'
 
 services:
     # default configuration for services in *this* file
@@ -30,10 +33,15 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    App\Controller\Auth\LoginController:
+    App\Controller\Auth\Api\LoginController:
         autowire: true
         autoconfigure: true
         tags: ['controller.service_arguments']
+
+    App\Controller\Auth\Api\RegisterApiController:
+        autowire: true
+        autoconfigure: true
+        tags: [ 'controller.service_arguments' ]
 
     App\Controller\Auth\RegisterController:
         autowire: true
@@ -58,4 +66,14 @@ services:
         resource: '../src/DataFixtures/'
         tags: [ 'doctrine.fixture.orm' ]
 
+    App\Service\SmsSender:
+        arguments:
+            $client: '@vonage.client'
+            $from: '%env(VONAGE_FROM)%'
 
+    vonage.client:
+        class: Vonage\Client
+        factory: [ 'App\Factory\VonageClientFactory', 'create' ]
+        arguments:
+            $key: '%env(VONAGE_API_KEY)%'
+            $secret: '%env(VONAGE_API_SECRET)%'

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Profile;
 
 use App\Repository\SubscriptionRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Entity\EntityService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,14 +16,10 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class ProfileController extends AbstractController
 {
-    private SubscriptionRepository $subscriptionRepository;
-    private EntityManagerInterface $em;
-
-    public function __construct(SubscriptionRepository $subscriptionRepository, EntityManagerInterface $em)
-    {
-        $this->subscriptionRepository = $subscriptionRepository;
-        $this->em = $em;
-    }
+    public function __construct(
+        private SubscriptionRepository $subscriptionRepository,
+        private EntityService $es,
+    ) {}
 
     #[Route('/profile', name: 'app_profile', methods: ['GET', 'POST'])]
     public function webProfile(#[CurrentUser] ?UserInterface $user, Request $request): Response
@@ -30,8 +28,7 @@ class ProfileController extends AbstractController
         if ($request->isMethod('POST')) {
             $user->setDefaultCity($request->request->get('default_city'));
             $user->setPhoneNumber($request->request->get('phone_number'));
-            $this->em->persist($user);
-            $this->em->flush();
+            $this->es->save($user);
 
             return $this->redirectToRoute('app_profile');
         }
@@ -40,8 +37,8 @@ class ProfileController extends AbstractController
 
         return $this->render(
             'profile/index.html.twig', [
-            'user' => $user,
-            'subscriptions' => $subscriptions,
+                'user' => $user,
+                'subscriptions' => $subscriptions,
             ]
         );
     }
@@ -51,8 +48,8 @@ class ProfileController extends AbstractController
     {
         return $this->json(
             [
-            'email' => $user->getUserIdentifier(),
-            'roles' => $user->getRoles(),
+                'email' => $user->getUserIdentifier(),
+                'roles' => $user->getRoles(),
             ]
         );
     }

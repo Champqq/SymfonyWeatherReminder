@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service;
 
 use App\Entity\Subscription;
 use App\Entity\User;
-use App\Service\Message\NotificationDispatcher;
 use App\Service\Message\Builder\EmergencyNotification;
 use App\Service\Message\Builder\ForecastNotification;
+use App\Service\Message\Builder\RecommendationService;
+use App\Service\Message\NotificationDispatcher;
 use App\Service\Message\Sender\EmailSender;
 use App\Service\Message\Sender\SmsSender;
 use App\Service\Weather\WeatherAlertService;
 use App\Service\Weather\WeatherService;
-use App\Service\Message\Builder\RecommendationService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -65,7 +67,7 @@ class NotificationDispatcherTest extends TestCase
         $forecast = [
             'weather' => [['description' => 'clear sky']],
             'main' => ['temp' => 20],
-            'wind' => ['speed' => 10]
+            'wind' => ['speed' => 10],
         ];
 
         $weatherService->method('getCurrentWeather')->willReturn($forecast);

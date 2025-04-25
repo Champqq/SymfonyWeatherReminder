@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Subscription;
 
 use App\DTO\SubscriptionRequest;
 use App\Entity\Subscription;
+use App\Service\Entity\EntityService;
 use App\Service\Request\RequestHandler;
 use App\Service\Subscription\SubscriptionService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +20,9 @@ class SubscriptionApiController extends AbstractController implements Subscripti
 {
     public function __construct(
         private SubscriptionService $subscriptionService,
-        private EntityManagerInterface $em,
+        private EntityService $es,
         private RequestHandler $requestHandler,
-    ) {
-    }
+    ) {}
 
     private function getValidatedDto(Request $request): SubscriptionRequest
     {
@@ -41,8 +42,7 @@ class SubscriptionApiController extends AbstractController implements Subscripti
 
         $this->subscriptionService->createOrUpdate($subscription, $dto);
 
-        $this->em->persist($subscription);
-        $this->em->flush();
+        $this->es->save($subscription);
 
         return $this->json(['message' => 'Subscription created']);
     }
@@ -55,10 +55,10 @@ class SubscriptionApiController extends AbstractController implements Subscripti
         $data = array_map(
             function (Subscription $subscription) {
                 return [
-                'id' => $subscription->getId(),
-                'city' => $subscription->getCity(),
-                'time' => $subscription->getTime()->format('H:i'),
-                'enabled' => $subscription->isEnabled(),
+                    'id' => $subscription->getId(),
+                    'city' => $subscription->getCity(),
+                    'time' => $subscription->getTime()->format('H:i'),
+                    'enabled' => $subscription->isEnabled(),
                 ];
             }, $subscriptions
         );
@@ -78,7 +78,7 @@ class SubscriptionApiController extends AbstractController implements Subscripti
 
         $this->subscriptionService->createOrUpdate($subscription, $dto);
 
-        $this->em->flush();
+        $this->es->save($subscription);
 
         return $this->json(['message' => 'Subscription updated']);
     }
@@ -88,8 +88,7 @@ class SubscriptionApiController extends AbstractController implements Subscripti
     {
         $subscription = $this->subscriptionService->getSubscription($id);
 
-        $this->em->remove($subscription);
-        $this->em->flush();
+        $this->es->delete($subscription);
 
         return $this->json(['message' => 'Subscription deleted']);
     }

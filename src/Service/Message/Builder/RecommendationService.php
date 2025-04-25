@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Message\Builder;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -9,8 +11,7 @@ class RecommendationService
     public function __construct(
         private HttpClientInterface $httpClient,
         private string $apiKey,
-    ) {
-    }
+    ) {}
 
     public function getRecommendation(string $description, float $temperature): string
     {
@@ -19,17 +20,17 @@ class RecommendationService
         try {
             $response = $this->httpClient->request(
                 'POST', 'https://api.openai.com/v1/chat/completions', [
-                'headers' => [
-                    'Authorization' => 'Bearer '.$this->apiKey,
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => [
-                    'model' => 'gpt-3.5-turbo',
-                    'messages' => [
-                        ['role' => 'user', 'content' => $prompt],
+                    'headers' => [
+                        'Authorization' => 'Bearer '.$this->apiKey,
+                        'Content-Type' => 'application/json',
                     ],
-                    'temperature' => 0.7,
-                ],
+                    'json' => [
+                        'model' => 'gpt-3.5-turbo',
+                        'messages' => [
+                            ['role' => 'user', 'content' => $prompt],
+                        ],
+                        'temperature' => 0.7,
+                    ],
                 ]
             );
 

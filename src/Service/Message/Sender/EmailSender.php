@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Message\Sender;
 
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -8,7 +10,7 @@ use Symfony\Component\Mime\Email;
 
 class EmailSender
 {
-    public function __construct(private MailerInterface $mailer)
+    public function __construct(private MailerInterface $mailer, private string $senderAddress)
     {
     }
 
@@ -18,7 +20,7 @@ class EmailSender
     public function send(string $to, string $subject, string $text): void
     {
         $email = (new Email())
-            ->from('weather@reminder.local')
+            ->from($this->senderAddress)
             ->to($to)
             ->subject($subject)
             ->text($text);

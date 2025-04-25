@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Weather;
 
 use App\Service\Weather\WeatherService;
@@ -18,8 +20,7 @@ class WeatherController extends AbstractController
 {
     public function __construct(
         private WeatherService $weatherService,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws TransportExceptionInterface
@@ -37,8 +38,8 @@ class WeatherController extends AbstractController
 
         return $this->render(
             'weather/index.html.twig', [
-            'forecast' => $weatherData,
-            'city' => $city,
+                'forecast' => $weatherData,
+                'city' => $city,
             ]
         );
     }

@@ -1,22 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Message\Sender;
 
 use Psr\Http\Client\ClientExceptionInterface;
 use Vonage\Client;
-use Vonage\Client\Credentials\Basic;
 use Vonage\Client\Exception\Exception;
 use Vonage\SMS\Message\SMS;
 
 class SmsSender
 {
-    private Client $client;
-    private string $from;
-
-    public function __construct(string $vonageKey, string $vonageSecret, string $vonageFrom)
+    public function __construct(private Client $client, private string $from)
     {
-        $this->client = new Client(new Basic($vonageKey, $vonageSecret));
-        $this->from = $vonageFrom;
     }
 
     /**
