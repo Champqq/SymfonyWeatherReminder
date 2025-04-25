@@ -5,50 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f83a375d-2f0d-4725-b7e9-59d1e6f06cd5" name="Changes" comment="fixes">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Command/SendWeatherRemindersCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/SendWeatherRemindersCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Command/TestDispatchCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/TestDispatchCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Auth/Api/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Auth/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Auth/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Auth/SecurityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Profile/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Profile/ProfileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Subscription/SubscriptionApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Subscription/SubscriptionApiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Subscription/SubscriptionControllerInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Subscription/SubscriptionControllerInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Subscription/SubscriptionWebController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Subscription/SubscriptionWebController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Weather/WeatherApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Weather/WeatherApiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Weather/WeatherController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Weather/WeatherController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/RegisterRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/RegisterRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/SubscriptionRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/SubscriptionRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/SubscriptionFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/SubscriptionFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Subscription.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Weather.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Weather.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Factory/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Factory/UserFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Message/SendWeatherReminderMessage.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Message/SendWeatherReminderMessage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/SubscriptionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/SubscriptionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scheduler/WeatherReminder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scheduler/WeatherReminder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Message/Builder/EmergencyNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Message/Builder/EmergencyNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Message/Builder/ForecastNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Message/Builder/ForecastNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Message/Builder/RecommendationService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Message/Builder/RecommendationService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Message/NotificationDispatcher.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Message/NotificationDispatcher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Message/SendWeatherReminderMessageHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Message/SendWeatherReminderMessageHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Message/Sender/EmailSender.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Message/Sender/EmailSender.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Message/Sender/SmsSender.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Message/Sender/SmsSender.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Request/RequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Request/RequestHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Subscription/SubscriptionService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Subscription/SubscriptionService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Weather/WeatherAlertService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Weather/WeatherAlertService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Weather/WeatherReminderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Weather/WeatherReminderService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Weather/WeatherService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Weather/WeatherService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Factory/UserFactoryTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Factory/UserFactoryTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Service/NotificationDispatcherTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Service/NotificationDispatcherTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Service/SubscriptionServiceTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Service/SubscriptionServiceTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Service/WeatherAlertServiceTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Service/WeatherAlertServiceTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -301,8 +258,17 @@
       <workItem from="1742664085947" duration="1048000" />
       <workItem from="1745412530684" duration="338000" />
       <workItem from="1745514864102" duration="9274000" />
-      <workItem from="1745605992911" duration="2705000" />
+      <workItem from="1745605992911" duration="3012000" />
     </task>
+    <task id="LOCAL-00001" summary="fixes">
+      <option name="closed" value="true" />
+      <created>1745610174754</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1745610174754</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
