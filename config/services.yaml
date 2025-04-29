@@ -48,15 +48,7 @@ services:
         autoconfigure: true
         tags: [ 'controller.service_arguments' ]
 
-    App\Service\Weather\WeatherService:
-        arguments:
-            $apiKey: '%openweather_api_key%'
-
-    App\Service\Message\Sender\SmsSender:
-        arguments:
-            $vonageKey: '%env(VONAGE_KEY)%'
-            $vonageSecret: '%env(VONAGE_SECRET)%'
-            $vonageFrom: '%env(VONAGE_FROM)%'
+    App\Service\Weather\WeatherService: ~
 
     App\Service\Message\Builder\RecommendationService:
         arguments:
@@ -66,7 +58,7 @@ services:
         resource: '../src/DataFixtures/'
         tags: [ 'doctrine.fixture.orm' ]
 
-    App\Service\SmsSender:
+    App\Service\Message\Sender\SmsSender:
         arguments:
             $client: '@vonage.client'
             $from: '%env(VONAGE_FROM)%'
@@ -75,5 +67,15 @@ services:
         class: Vonage\Client
         factory: [ 'App\Factory\VonageClientFactory', 'create' ]
         arguments:
-            $key: '%env(VONAGE_API_KEY)%'
-            $secret: '%env(VONAGE_API_SECRET)%'
+            $key: '%env(VONAGE_KEY)%'
+            $secret: '%env(VONAGE_SECRET)%'
+
+    App\Service\Message\Sender\EmailSender:
+        arguments:
+            $senderAddress: '%env(MAILER_SENDER)%'
+
+    App\Service\Weather\HttpWeatherClient:
+        arguments:
+            $apiKey: '%env(OPENWEATHER_API_KEY)%'
+            $currentUrl: '%env(OPENWEATHER_CURRENT_URL)%'
+            $forecastUrl: '%env(OPENWEATHER_FORECAST_URL)%'

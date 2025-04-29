@@ -15,7 +15,8 @@ class WeatherService
     public function __construct(
         private HttpWeatherClient $client,
         private WeatherParser $parser,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws TransportExceptionInterface

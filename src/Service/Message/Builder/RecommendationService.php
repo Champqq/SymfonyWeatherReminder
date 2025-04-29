@@ -11,7 +11,8 @@ class RecommendationService
     public function __construct(
         private HttpClientInterface $httpClient,
         private string $apiKey,
-    ) {}
+    ) {
+    }
 
     public function getRecommendation(string $description, float $temperature): string
     {

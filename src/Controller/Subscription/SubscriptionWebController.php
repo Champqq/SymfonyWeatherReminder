@@ -22,7 +22,8 @@ class SubscriptionWebController extends AbstractController implements Subscripti
         private SubscriptionService $subscriptionService,
         private EntityService $es,
         private RequestHandler $requestHandler,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws \Exception
@@ -60,6 +61,7 @@ class SubscriptionWebController extends AbstractController implements Subscripti
             $this->subscriptionService->createOrUpdate($subscription, $dto);
 
             $this->es->save($subscription);
+
             return $this->redirectToRoute('app_profile');
         }
 
@@ -76,6 +78,7 @@ class SubscriptionWebController extends AbstractController implements Subscripti
         $subscription = $this->subscriptionService->getSubscription($id);
 
         $this->es->delete($subscription);
+
         return $this->redirectToRoute('app_profile');
     }
 }

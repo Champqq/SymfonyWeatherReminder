@@ -22,7 +22,8 @@ class SubscriptionApiController extends AbstractController implements Subscripti
         private SubscriptionService $subscriptionService,
         private EntityService $es,
         private RequestHandler $requestHandler,
-    ) {}
+    ) {
+    }
 
     private function getValidatedDto(Request $request): SubscriptionRequest
     {

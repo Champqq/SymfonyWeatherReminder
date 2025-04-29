@@ -17,23 +17,26 @@ class RegisterController extends AbstractController
     public function __construct(
         private UserFactory $userFactory,
         private EntityService $es,
-    ) {}
+    ) {
+    }
 
-    #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
-    public function registerForm(Request $request): Response
+    #[Route('/register', name: 'app_register', methods: ['GET'])]
+    public function showRegistrationForm(): Response
     {
-        if ($request->isMethod('POST')) {
-            $dto = new RegisterRequest(
-                $request->request->get('email'),
-                $request->request->get('password')
-            );
-
-            $user = $this->userFactory->create($dto);
-            $this->es->save($user);
-
-            return $this->redirectToRoute('home');
-        }
-
         return $this->render('register/index.html.twig');
+    }
+
+    #[Route('/register', name: 'app_register_post', methods: ['POST'])]
+    public function handleRegistration(Request $request): Response
+    {
+        $dto = new RegisterRequest(
+            $request->request->get('email'),
+            $request->request->get('password')
+        );
+
+        $user = $this->userFactory->create($dto);
+        $this->es->save($user);
+
+        return $this->redirectToRoute('home');
     }
 }

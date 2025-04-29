@@ -19,7 +19,8 @@ class ProfileController extends AbstractController
     public function __construct(
         private SubscriptionRepository $subscriptionRepository,
         private EntityService $es,
-    ) {}
+    ) {
+    }
 
     #[Route('/profile', name: 'app_profile', methods: ['GET', 'POST'])]
     public function webProfile(#[CurrentUser] ?UserInterface $user, Request $request): Response

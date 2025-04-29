@@ -20,7 +20,8 @@ class WeatherController extends AbstractController
 {
     public function __construct(
         private WeatherService $weatherService,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws TransportExceptionInterface
