@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Weather;
 
+use App\DTO\WeatherDTO;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -25,9 +26,10 @@ class WeatherService
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
      */
-    public function getCurrentWeather(string $city): array
+    public function getCurrentWeather(string $city): WeatherDTO
     {
-        return $this->client->fetchCurrent($city);
+        $data = $this->client->fetchCurrent($city);
+        return WeatherDTO::fromApiResponse($city, $data);
     }
 
     /**

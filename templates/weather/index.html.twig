@@ -10,8 +10,8 @@
             {% for day in forecast %}
                 <div style="margin-bottom: 15px;">
                     <strong>{{ day.dt_txt|date('l, d M Y') }}</strong><br>
-                    🌤 {{ day.weather[0].description|capitalize }}<br>
-                    🌡 Температура: {{ day.main.temp }}°C
+                    {{ day.weather[0].description|capitalize }}<br>
+                    Температура: {{ day.main.temp }}°C
                 </div>
             {% endfor %}
         </ul>

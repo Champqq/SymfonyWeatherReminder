@@ -30,9 +30,11 @@ services:
       - .:/var/www/html
     depends_on:
       - database
+      - rabbitmq
     working_dir: /var/www/html
     environment:
       DATABASE_URL: mysql://symfony:symfony@database:3306/symfony
+      MESSENGER_TRANSPORT_DSN: "amqp://guest:guest@rabbitmq:5672/%2f/messages"
     ports:
       - "9000:9000"
 
@@ -47,5 +49,17 @@ services:
     depends_on:
       - php
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
 volumes:
   database_data:
+  rabbitmq-data:

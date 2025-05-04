@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Service;
 
+use App\DTO\WeatherDTO;
 use App\Entity\Subscription;
 use App\Entity\User;
 use App\Service\Message\Builder\EmergencyNotification;
@@ -13,8 +14,8 @@ use App\Service\Message\NotificationDispatcher;
 use App\Service\Message\Sender\EmailSender;
 use App\Service\Message\Sender\SmsSender;
 use App\Service\Weather\WeatherAlertService;
+use App\Service\Weather\WeatherSaver;
 use App\Service\Weather\WeatherService;
-use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -41,7 +42,8 @@ class NotificationDispatcherTest extends TestCase
         $forecastBuilder = $this->createMock(ForecastNotification::class);
         $emailSender = $this->createMock(EmailSender::class);
         $smsSender = $this->createMock(SmsSender::class);
-        $em = $this->createMock(EntityManagerInterface::class);
+        $weatherSaver = $this->createMock(WeatherSaver::class);
+
 
         $dispatcher = new NotificationDispatcher(
             $weatherService,
@@ -51,7 +53,7 @@ class NotificationDispatcherTest extends TestCase
             $forecastBuilder,
             $emailSender,
             $smsSender,
-            $em
+            $weatherSaver
         );
 
         $user = new User();
@@ -70,7 +72,15 @@ class NotificationDispatcherTest extends TestCase
             'wind' => ['speed' => 10],
         ];
 
-        $weatherService->method('getCurrentWeather')->willReturn($forecast);
+        $weather = new WeatherDTO(
+            city: 'Kyiv',
+            temperature: 10.0,
+            description: 'clear',
+            windSpeed: 3.0,
+            rawData: []
+        );
+
+        $weatherService->method('getCurrentWeather')->willReturn($weather);
         $weatherService->method('getForecast')->willReturn([$forecast]);
         $recommendationService->method('getRecommendation')->willReturn('Take a jacket.');
         $alertService->method('hasSevereTemperature')->willReturn(false);

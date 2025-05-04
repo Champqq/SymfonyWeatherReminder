@@ -4,50 +4,31 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Entity\Subscription;
-use App\Service\Message\NotificationDispatcher;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Weather\WeatherReminderService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Component\Messenger\Exception\ExceptionInterface;
 
 #[AsCommand(
     name: 'app:send-weather-reminders',
-    description: 'Sends weather reminders to ALL active subscriptions (no time check).',
+    description: 'Dispatch weather reminders for current time window',
 )]
 class SendWeatherRemindersCommand extends Command
 {
-    public function __construct(
-        private EntityManagerInterface $em,
-        private NotificationDispatcher $dispatcher,
-    ) {
+    public function __construct(private WeatherReminderService $reminderService)
+    {
         parent::__construct();
     }
 
     /**
-     * @throws TransportExceptionInterface
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws ClientExceptionInterface
+     * @throws ExceptionInterface
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $subscriptions = $this->em->getRepository(Subscription::class)->findBy(['enabled' => true]);
-
-        foreach ($subscriptions as $subscription) {
-            $this->dispatcher->dispatch($subscription);
-        }
-
-        $output->writeln('All active subscriptions processed.');
-
+        $this->reminderService->send();
+        $output->writeln('<info>Weather reminders dispatched successfully.</info>');
         return Command::SUCCESS;
     }
 }

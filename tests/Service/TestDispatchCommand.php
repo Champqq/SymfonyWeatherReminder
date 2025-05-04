@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command;
+namespace App\Tests\Service;
 
 use App\Message\SendWeatherReminderMessage;
 use Symfony\Component\Console\Attribute\AsCommand;

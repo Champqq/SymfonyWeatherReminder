@@ -79,3 +79,12 @@ services:
             $apiKey: '%env(OPENWEATHER_API_KEY)%'
             $currentUrl: '%env(OPENWEATHER_CURRENT_URL)%'
             $forecastUrl: '%env(OPENWEATHER_FORECAST_URL)%'
+
+    app.command.fetch_weather_data:
+        class: App\Command\FetchWeatherDataCommand
+        tags:
+            - { name: 'console.command' }
+
+    App\MessageHandler\ScheduledFetchWeatherMessageHandler:
+        arguments:
+            $fetchWeatherCommand: '@app.command.fetch_weather_data'

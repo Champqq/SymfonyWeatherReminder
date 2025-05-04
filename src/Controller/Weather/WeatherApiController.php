@@ -35,10 +35,10 @@ class WeatherApiController extends AbstractController
 
         return new JsonResponse(
             [
-                'city' => $weather['name'],
-                'temperature' => $weather['main']['temp'],
-                'description' => $weather['weather'][0]['description'],
-                'wind_speed' => $weather['wind']['speed'],
+                'city' => $weather->getCity(),
+                'temperature' => $weather->getTemperature(),
+                'description' => $weather->getDescription(),
+                'wind_speed' => $weather->getWindSpeed(),
             ]
         );
     }

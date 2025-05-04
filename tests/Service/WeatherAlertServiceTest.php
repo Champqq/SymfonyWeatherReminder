@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Service;
 
+use App\DTO\WeatherDTO;
 use App\Service\Weather\WeatherAlertService;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +19,13 @@ class WeatherAlertServiceTest extends TestCase
 
     public function testHasSevereTemperatureTrue(): void
     {
-        $now = ['main' => ['temp' => 10]];
+        $now = new WeatherDTO(
+            city: 'Kyiv',
+            temperature: 10.0,
+            description: 'clear',
+            windSpeed: 3.0,
+            rawData: []
+        );
         $forecast = ['main' => ['temp' => 25]];
 
         $result = $this->service->hasSevereTemperature($now, $forecast);
@@ -27,7 +34,13 @@ class WeatherAlertServiceTest extends TestCase
 
     public function testHasSevereTemperatureFalse(): void
     {
-        $now = ['main' => ['temp' => 10]];
+        $now = new WeatherDTO(
+            city: 'Kyiv',
+            temperature: 10.0,
+            description: 'cloudy',
+            windSpeed: 4.0,
+            rawData: []
+        );
         $forecast = ['main' => ['temp' => 12]];
 
         $result = $this->service->hasSevereTemperature($now, $forecast);

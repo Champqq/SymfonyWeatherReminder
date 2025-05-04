@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Service\Weather;
 
+use App\DTO\WeatherDTO;
+
 class WeatherAlertService
 {
-    public function hasSevereTemperature(array $now, array $forecast, int $threshold = 10): bool
+    public function hasSevereTemperature(WeatherDTO $now, array $forecast, int $threshold = 10): bool
     {
-        return abs($forecast['main']['temp'] - $now['main']['temp']) >= $threshold;
+        return abs($forecast['main']['temp'] - $now->getTemperature()) >= $threshold;
     }
 
     public function hasDangerousConditions(array $forecast): bool

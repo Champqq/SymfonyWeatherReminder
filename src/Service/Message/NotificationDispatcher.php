@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Service\Message;
 
+use App\DTO\WeatherDTO;
 use App\Entity\Subscription;
-use App\Entity\Weather;
 use App\Service\Message\Builder\EmergencyNotification;
 use App\Service\Message\Builder\ForecastNotification;
 use App\Service\Message\Builder\RecommendationService;
 use App\Service\Message\Sender\EmailSender;
 use App\Service\Message\Sender\SmsSender;
 use App\Service\Weather\WeatherAlertService;
+use App\Service\Weather\WeatherSaver;
 use App\Service\Weather\WeatherService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -30,7 +30,7 @@ class NotificationDispatcher
         private ForecastNotification $forecastBuilder,
         private EmailSender $emailSender,
         private SmsSender $smsSender,
-        private EntityManagerInterface $em,
+        private WeatherSaver $weatherSaver,
     ) {
     }
 
@@ -52,7 +52,7 @@ class NotificationDispatcher
         $current = $this->weatherService->getCurrentWeather($city);
         $forecast = $this->weatherService->getForecast($city)[0] ?? null;
 
-        $this->saveWeather($city, $current);
+        $this->weatherSaver->saveWeatherFromDTO($current);
 
         $description = $forecast['weather'][0]['description'];
         $temperature = $forecast['main']['temp'];
@@ -70,7 +70,7 @@ class NotificationDispatcher
         }
     }
 
-    private function buildNotification(Subscription $subscription, array $current, array $forecast, string $recommendation): array
+    private function buildNotification(Subscription $subscription, WeatherDTO $current, array $forecast, string $recommendation): array
     {
         $description = $forecast['weather'][0]['description'];
         $temperature = $forecast['main']['temp'];
@@ -83,18 +83,5 @@ class NotificationDispatcher
         }
 
         return $this->forecastBuilder->build($subscription, $description, $temperature, $recommendation);
-    }
-
-    private function saveWeather(string $city, array $current): void
-    {
-        $weather = new Weather();
-        $weather->setCity($city);
-        $weather->setDate(new \DateTime());
-        $weather->setTemperature($current['main']['temp']);
-        $weather->setDescription($current['weather'][0]['description']);
-        $weather->setWindSpeed($current['wind']['speed']);
-
-        $this->em->persist($weather);
-        $this->em->flush();
     }
 }

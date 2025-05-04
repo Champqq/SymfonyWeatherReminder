@@ -37,6 +37,11 @@ class SubscriptionService
         return $this->em->getRepository(Subscription::class)->find($id);
     }
 
+    public function getActiveSubscriptions(): array
+    {
+        return $this->em->getRepository(Subscription::class)->findBy(['enabled' => true]);
+    }
+
     public function getSubscriptions(#[CurrentUser] ?UserInterface $user): array
     {
         return $this->em->getRepository(Subscription::class)->findBy(['user' => $user]);
