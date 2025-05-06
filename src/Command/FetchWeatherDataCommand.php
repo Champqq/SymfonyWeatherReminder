@@ -44,7 +44,7 @@ class FetchWeatherDataCommand extends Command
         foreach ($subscriptions as $subscription) {
             $city = $subscription->getCity();
             $weather = $this->weatherService->getCurrentWeather($city);
-            $this->weatherSaver->saveWeatherFromDTO($weather);
+            $this->weatherSaver->saveWeather($weather);
         }
         $output->writeln('<info>Weather data fetched successfully.</info>');
 

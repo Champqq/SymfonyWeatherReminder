@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace App\Service\Weather;
 
+use App\Service\Mapper\ForecastMapper;
+
 class WeatherParser
 {
+    public function __construct(private ForecastMapper $mapper)
+    {
+    }
+
     public function parseDailyForecast(array $data): array
     {
         $dailyForecasts = [];
@@ -15,7 +21,7 @@ class WeatherParser
             $date = explode(' ', $entry['dt_txt'])[0];
 
             if (!in_array($date, $addedDates) && str_contains($entry['dt_txt'], '12:00:00')) {
-                $dailyForecasts[] = $entry;
+                $dailyForecasts[] = $this->mapper->toDto($entry);
                 $addedDates[] = $date;
             }
 
