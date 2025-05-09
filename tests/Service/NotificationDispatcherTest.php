@@ -7,15 +7,13 @@ namespace App\Tests\Service;
 use App\DTO\WeatherDTO;
 use App\Entity\Subscription;
 use App\Entity\User;
-use App\Service\Message\Builder\EmergencyNotification;
-use App\Service\Message\Builder\ForecastNotification;
+use App\Service\Message\Builder\NotificationBuilder;
 use App\Service\Message\Builder\RecommendationService;
 use App\Service\Message\NotificationDispatcher;
 use App\Service\Message\Sender\EmailSender;
 use App\Service\Message\Sender\SmsSender;
-use App\Service\Weather\WeatherAlertService;
 use App\Service\Weather\WeatherSaver;
-use App\Service\Weather\WeatherService;
+use App\Service\Weather\WeatherServiceFacade;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -35,25 +33,20 @@ class NotificationDispatcherTest extends TestCase
      */
     public function testDispatch(): void
     {
-        $weatherService = $this->createMock(WeatherService::class);
-        $alertService = $this->createMock(WeatherAlertService::class);
+        $weatherService = $this->createMock(WeatherServiceFacade::class);
         $recommendationService = $this->createMock(RecommendationService::class);
-        $emergencyBuilder = $this->createMock(EmergencyNotification::class);
-        $forecastBuilder = $this->createMock(ForecastNotification::class);
         $emailSender = $this->createMock(EmailSender::class);
         $smsSender = $this->createMock(SmsSender::class);
         $weatherSaver = $this->createMock(WeatherSaver::class);
-
+        $notificationBuilder = $this->createMock(NotificationBuilder::class);
 
         $dispatcher = new NotificationDispatcher(
             $weatherService,
-            $alertService,
             $recommendationService,
-            $emergencyBuilder,
-            $forecastBuilder,
             $emailSender,
             $smsSender,
-            $weatherSaver
+            $weatherSaver,
+            $notificationBuilder,
         );
 
         $user = new User();
@@ -77,15 +70,12 @@ class NotificationDispatcherTest extends TestCase
             temperature: 10.0,
             description: 'clear',
             windSpeed: 3.0,
-            rawData: []
         );
 
         $weatherService->method('getCurrentWeather')->willReturn($weather);
         $weatherService->method('getForecast')->willReturn([$forecast]);
         $recommendationService->method('getRecommendation')->willReturn('Take a jacket.');
-        $alertService->method('hasSevereTemperature')->willReturn(false);
-        $alertService->method('hasDangerousConditions')->willReturn(false);
-        $forecastBuilder->method('build')->willReturn(['Forecast subject', 'Forecast message']);
+        $notificationBuilder->method('buildNotification')->willReturn(['Forecast subject', 'Forecast message']);
 
         $emailSender->expects($this->once())->method('send')
             ->with('test@example.com', 'Forecast subject', 'Forecast message');

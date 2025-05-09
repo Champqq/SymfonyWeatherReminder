@@ -6,7 +6,7 @@ namespace App\Command;
 
 use App\Service\Subscription\SubscriptionService;
 use App\Service\Weather\WeatherSaver;
-use App\Service\Weather\WeatherService;
+use App\Service\Weather\WeatherServiceFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,7 +24,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class FetchWeatherDataCommand extends Command
 {
     public function __construct(
-        private WeatherService $weatherService,
+        private WeatherServiceFacade $weatherService,
         private SubscriptionService $subscriptionService,
         private WeatherSaver $weatherSaver,
     ) {

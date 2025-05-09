@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Weather;
 
-use App\Service\Weather\WeatherService;
+use App\Service\Weather\WeatherServiceFacade;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +17,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class WeatherApiController extends AbstractController
 {
     public function __construct(
-        private WeatherService $weatherService,
+        private WeatherServiceFacade $weatherService,
     ) {
     }
 

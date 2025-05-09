@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Weather;
+namespace App\Service\Weather\Provider;
 
 use App\DTO\ForecastDTO;
 use App\DTO\WeatherDTO;
 use App\Service\Mapper\WeatherMapper;
+use App\Service\Weather\HttpWeatherClient;
+use App\Service\Weather\WeatherParser;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
-class WeatherService
+class WeatherApiProvider implements WeatherProviderInterface
 {
     public function __construct(
         private HttpWeatherClient $weatherClient,
