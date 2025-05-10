@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Weather;
 
-use App\Service\Weather\WeatherServiceFacade;
+use App\Service\Weather\Provider\WeatherApiProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +19,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class WeatherController extends AbstractController
 {
     public function __construct(
-        private WeatherServiceFacade $weatherService,
+        private WeatherApiProvider $weatherProvider,
     ) {
     }
 
@@ -35,7 +35,7 @@ class WeatherController extends AbstractController
     {
         $city = $user?->getDefaultCity() ?? 'Kyiv';
 
-        $weather = $this->weatherService->getForecast($city);
+        $weather = $this->weatherProvider->getForecast($city);
 
         return $this->render(
             'weather/index.html.twig', [

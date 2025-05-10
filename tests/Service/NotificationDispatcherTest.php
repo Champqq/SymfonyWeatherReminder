@@ -12,8 +12,8 @@ use App\Service\Message\Builder\RecommendationService;
 use App\Service\Message\NotificationDispatcher;
 use App\Service\Message\Sender\EmailSender;
 use App\Service\Message\Sender\SmsSender;
+use App\Service\Weather\Provider\WeatherApiProvider;
 use App\Service\Weather\WeatherSaver;
-use App\Service\Weather\WeatherServiceFacade;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -33,7 +33,7 @@ class NotificationDispatcherTest extends TestCase
      */
     public function testDispatch(): void
     {
-        $weatherService = $this->createMock(WeatherServiceFacade::class);
+        $weatherProvider = $this->createMock(WeatherApiProvider::class);
         $recommendationService = $this->createMock(RecommendationService::class);
         $emailSender = $this->createMock(EmailSender::class);
         $smsSender = $this->createMock(SmsSender::class);
@@ -41,7 +41,7 @@ class NotificationDispatcherTest extends TestCase
         $notificationBuilder = $this->createMock(NotificationBuilder::class);
 
         $dispatcher = new NotificationDispatcher(
-            $weatherService,
+            $weatherProvider,
             $recommendationService,
             $emailSender,
             $smsSender,
@@ -72,8 +72,8 @@ class NotificationDispatcherTest extends TestCase
             windSpeed: 3.0,
         );
 
-        $weatherService->method('getCurrentWeather')->willReturn($weather);
-        $weatherService->method('getForecast')->willReturn([$forecast]);
+        $weatherProvider->method('getCurrentWeather')->willReturn($weather);
+        $weatherProvider->method('getForecast')->willReturn([$forecast]);
         $recommendationService->method('getRecommendation')->willReturn('Take a jacket.');
         $notificationBuilder->method('buildNotification')->willReturn(['Forecast subject', 'Forecast message']);
 

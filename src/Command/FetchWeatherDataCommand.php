@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Service\Subscription\SubscriptionService;
+use App\Service\Weather\Provider\WeatherApiProvider;
 use App\Service\Weather\WeatherSaver;
-use App\Service\Weather\WeatherServiceFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,7 +24,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class FetchWeatherDataCommand extends Command
 {
     public function __construct(
-        private WeatherServiceFacade $weatherService,
+        private WeatherApiProvider $weatherProvider,
         private SubscriptionService $subscriptionService,
         private WeatherSaver $weatherSaver,
     ) {
@@ -43,7 +43,7 @@ class FetchWeatherDataCommand extends Command
         $subscriptions = $this->subscriptionService->getActiveSubscriptions();
         foreach ($subscriptions as $subscription) {
             $city = $subscription->getCity();
-            $weather = $this->weatherService->getCurrentWeather($city);
+            $weather = $this->weatherProvider->getCurrentWeather($city);
             $this->weatherSaver->saveWeather($weather);
         }
         $output->writeln('<info>Weather data fetched successfully.</info>');

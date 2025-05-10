@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Weather;
 
-use App\Service\Weather\WeatherServiceFacade;
+use App\Service\Weather\Provider\WeatherApiProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +17,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class WeatherApiController extends AbstractController
 {
     public function __construct(
-        private WeatherServiceFacade $weatherService,
+        private WeatherApiProvider $weatherProvider,
     ) {
     }
 
@@ -31,7 +31,7 @@ class WeatherApiController extends AbstractController
     #[Route('/api/weather/{city}', name: 'weather_by_city', methods: ['GET'])]
     public function getWeather(string $city): JsonResponse
     {
-        $weather = $this->weatherService->getCurrentWeather($city);
+        $weather = $this->weatherProvider->getCurrentWeather($city);
 
         return new JsonResponse(
             [

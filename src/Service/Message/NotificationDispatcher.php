@@ -9,8 +9,8 @@ use App\Service\Message\Builder\NotificationBuilder;
 use App\Service\Message\Builder\RecommendationService;
 use App\Service\Message\Sender\EmailSender;
 use App\Service\Message\Sender\SmsSender;
+use App\Service\Weather\Provider\WeatherApiProvider;
 use App\Service\Weather\WeatherSaver;
-use App\Service\Weather\WeatherServiceFacade;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -21,7 +21,7 @@ use Vonage\Client\Exception\Exception;
 class NotificationDispatcher
 {
     public function __construct(
-        private WeatherServiceFacade $weatherService,
+        private WeatherApiProvider $weatherProvider,
         private RecommendationService $recommendationService,
         private EmailSender $emailSender,
         private SmsSender $smsSender,
@@ -43,8 +43,8 @@ class NotificationDispatcher
         $city = $subscription->getCity();
         $user = $subscription->getUser();
 
-        $current = $this->weatherService->getCurrentWeather($city);
-        $forecast = $this->weatherService->getForecast($city)[0] ?? null;
+        $current = $this->weatherProvider->getCurrentWeather($city);
+        $forecast = $this->weatherProvider->getForecast($city)[0] ?? null;
 
         $this->weatherSaver->saveWeather($current);
 
