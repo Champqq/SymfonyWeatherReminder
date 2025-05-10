@@ -9,7 +9,7 @@ use App\Service\Message\Builder\NotificationBuilder;
 use App\Service\Message\Builder\RecommendationService;
 use App\Service\Message\Sender\EmailSender;
 use App\Service\Message\Sender\SmsSender;
-use App\Service\Weather\Provider\WeatherApiProvider;
+use App\Service\Weather\Provider\WeatherProviderInterface;
 use App\Service\Weather\WeatherSaver;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -21,7 +21,7 @@ use Vonage\Client\Exception\Exception;
 class NotificationDispatcher
 {
     public function __construct(
-        private WeatherApiProvider $weatherProvider,
+        private WeatherProviderInterface $weatherProvider,
         private RecommendationService $recommendationService,
         private EmailSender $emailSender,
         private SmsSender $smsSender,

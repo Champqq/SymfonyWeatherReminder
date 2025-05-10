@@ -12,7 +12,7 @@ use App\Service\Message\Builder\RecommendationService;
 use App\Service\Message\NotificationDispatcher;
 use App\Service\Message\Sender\EmailSender;
 use App\Service\Message\Sender\SmsSender;
-use App\Service\Weather\Provider\WeatherApiProvider;
+use App\Service\Weather\Provider\WeatherProviderInterface;
 use App\Service\Weather\WeatherSaver;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -33,7 +33,7 @@ class NotificationDispatcherTest extends TestCase
      */
     public function testDispatch(): void
     {
-        $weatherProvider = $this->createMock(WeatherApiProvider::class);
+        $weatherProvider = $this->createMock(WeatherProviderInterface::class);
         $recommendationService = $this->createMock(RecommendationService::class);
         $emailSender = $this->createMock(EmailSender::class);
         $smsSender = $this->createMock(SmsSender::class);

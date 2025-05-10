@@ -4,7 +4,6 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    weather_provider: 'weatherapi'
     openweather_api_key: '%env(OPENWEATHER_API_KEY)%'
     vonage_key: '%env(VONAGE_KEY)%'
     vonage_secret: '%env(VONAGE_SECRET)%'
@@ -13,6 +12,7 @@ parameters:
     mailer.sender: '%env(MAILER_SENDER)%'
     openweather.current_url: '%env(OPENWEATHER_CURRENT_URL)%'
     openweather.forecast_url: '%env(OPENWEATHER_FORECAST_URL)%'
+    weather_provider: '%env(WEATHER_PROVIDER)%'
 
 services:
     # default configuration for services in *this* file
@@ -47,6 +47,10 @@ services:
         autowire: true
         autoconfigure: true
         tags: [ 'controller.service_arguments' ]
+
+    App\Service\Weather\Provider\WeatherProviderInterface:
+        alias: 'App\Service\Weather\Provider\WeatherApiProvider'
+        public: false
 
     App\Service\Weather\Provider\WeatherApiProvider: ~
 
